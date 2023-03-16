@@ -18,6 +18,9 @@ while guessed_states < 50:
     else:
         answer_state = screen.textinput(title=f"{guessed_states}/50 States correct.", prompt="What's another state's name?").title()
     if answer_state == "Exit":
+        missing_states = [state for state in all_states if state not in list_of_states]
+        new_data = pandas.DataFrame(missing_states)
+        new_data.to_csv("Missing_states.csv")
         break
     if answer_state in df.values:
         guessed_row = df[df["state"] ==answer_state]
@@ -32,11 +35,6 @@ while guessed_states < 50:
         list_of_states.append(answer_state)
 
     
-for state in list_of_states:
-    all_states.remove(state)
-
-my_dict = {'state': all_states}
-pandas.DataFrame(my_dict).to_csv('out.csv', index=False)
 
 
 
